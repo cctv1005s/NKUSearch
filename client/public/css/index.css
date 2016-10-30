@@ -52,7 +52,7 @@ html, body {color: #333;font:DroidSansFallback,Arial,sans-serif;-webkit-text-siz
 }
 
 /*搜索页的style*/
-.searchPage{background:#eee;}
+.searchPage{background:#eee;min-height: 100%;}
 .searchPage > .header{padding-top: 0.5rem;background-color: white;}
 .header-searchbox{height: 1.2rem;background-color: white;}
 .header-icon{height: 1.2rem;width: 1.2rem;font-size: 0.5rem;line-height: 1.2rem;text-align: center;color: green;float: left;}
