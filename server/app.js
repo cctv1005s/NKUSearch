@@ -4,12 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
+var session = require('express-session');
+var webrouter = require('./webrouter'); 
+var partials = require('express-partials');
 var app = express();
-
+var config = require('./config');
+//调用游戏执行文件
 // view engine setup
 app.set('views', path.join(__dirname, '../client/views'));
 app.set('view engine', 'ejs');
@@ -21,9 +21,28 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client/public')));
+app.use(partials());
 
-app.use('/', routes);
-app.use('/users', users);
+app.use(session({
+    secret: 'work-system',
+    cookie: {
+        maxAge: 7*24 * 60 * 60 * 60
+    },
+    // store:new RedisStore({
+    //   port: '6379',
+    //   host: '127.0.0.1',
+    //   db: 0,
+    //   pass:''
+    // })
+    // ,
+    resave:false,
+    saveUninitialized:false
+}));
+
+
+
+app.use('/',webrouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -32,7 +51,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
 
 // development error handler
 // will print stacktrace
@@ -56,5 +74,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
+var port = config.port;
+console.log('app listen on '+port);
 module.exports = app;
