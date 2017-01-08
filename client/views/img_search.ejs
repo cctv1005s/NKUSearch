@@ -1,0 +1,96 @@
+<div class="img-search">
+
+<!-- 搜索框 -->
+<div class="search">
+	<%- partial('searchBox.ejs',{value:keyword}); %>
+</div>
+
+<% console.log(data.length); %>
+
+<!--搜索分类-->
+<div class="search-classify">
+	<ul>
+		<li class="search-classify-item">
+			<a href="/search?keyword=<%- keyword%>">网页</a>
+		</li>
+
+		<li class="search-classify-item active">
+			<a href="./search?keyword=<%- keyword %>&page=<%- page %>>">图片</a>
+		</li>
+
+	</ul>
+</div>
+
+<div class="search-num" style="margin-bottom:20px;">
+	<%- length %>条结果
+</div>
+
+<style type="text/css">
+	body{background: white;}
+</style>
+
+<% for(var i in data){  %>
+	<div class="search-img-wraper">
+		<img src="<%- data[i].src||"" %>" class="search-img" />
+
+		<a href="<%- data[i].url %>" class="search-img-url">
+			<i class="am-icon-eye"></i>访问源网址
+		</a>
+	</div>
+<%}%>
+</div>
+
+
+<!-- 分页 -->
+<%
+//计算分页目录
+//
+var all = length;
+
+var num = all/10 ;
+
+var begin = parseInt(page) - 5;
+if(begin<0){
+	begin = 0;
+}
+var end = parseInt(page) + 5;
+if(end > all){
+	end = all;
+}
+
+%>
+
+<!--分页的-->
+
+<div class="search-pageing">
+	<ul class="am-pagination am-pagination-left">
+	<%
+		if(page != 0){
+	%>
+		<li class="arrow">
+			<a href="/image/search?keyword=<%- keyword %>&page=<%- parseInt(page) - 1 %> " >
+				<i class="am-icon-arrow-left"></i>
+			</a>
+		</li>
+
+	<%
+		}
+	%>
+
+	<% for(var i = begin;i < end;i++){ %>
+		<li class="<%- i==page?"am-active":"" %>" >
+		    <a href="/image/search?keyword=<%- keyword %>&page=<%- i %> ">
+		      <%- i+1 %>
+		    </a>
+		</li>
+	<% } %>
+
+	<li class="arrow">
+		<a href="/image/search?keyword=<%- keyword %>&page=<%- parseInt(page) + 1 %> ">
+			<i class="am-icon-arrow-right"></i>
+		</a>
+	</li>
+
+	</ul>
+</div>
+

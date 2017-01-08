@@ -1,0 +1,132 @@
+	<div class="searchBox">
+		<div class="searchTitle"><a href="/"><i class="am-icon am-icon-glide-g"></a></i></div>
+		
+		<div class="searchInput-box">
+			<input type="text" class="searchInput" placeholder="键入以搜索" maxlength="30" value="<%- value %>"></input>
+
+			<div class="searchBtn" >
+				<i class="am-icon am-icon-search"></i>
+			</div>
+
+			<div class="micphone" title="点击以语音输入">
+				<i class="am-icon am-icon-microphone"></i>
+			</div>
+			
+			<div class="suggest-box">
+			</div>
+
+		</div>
+	</div>
+
+<script type="text/javascript">
+	//内容处理
+	function replace(str){
+		str = str.replace(/ /g,'');
+		return str.length == 0?false:str;
+	}
+
+
+	//点击确认按钮
+	$(".searchBtn").click(function(e){
+		var value = $('.searchInput').val();
+		
+		if(!replace(value)){
+			return;
+		}
+
+		window.location.href = "./search?"+"keyword="+encodeURIComponent(value)+"&page=0";
+	});
+
+	//敲下回车
+	$('.searchInput').keydown(function(e) {
+		
+		var value = $(e.currentTarget).val();
+		if(!replace(value)){
+			return;
+		}
+
+        if(e.keyCode == 13){
+       		window.location.href = "./search?"+"keyword="+encodeURI(value)+"&page=0";     
+        }
+    });
+
+	//搜索建议
+    $('.searchInput').keydown(function(e){
+    	var value = $(e.currentTarget).val();
+		if(!replace(value)){
+			$(".suggest-box").html("");
+			return;
+		}
+
+		$.get('/suggest?wd='+encodeURIComponent(value),function(data){
+			var html = "";
+			var suggest_list = getVal(data);
+
+			var ss = '<ul class="suggest-list">' ;
+			for(var i in suggest_list){
+				ss += '<li class="suggest-item"><a href=/search?query='+encodeURIComponent(suggest_list[i])+'>'+suggest_list[i]+'</a></li>';
+			}
+			ss += '</ul>';
+			$(".suggest-box").html(ss);
+		});
+    });
+
+    //转换字符串到object
+    function getVal(str){
+    	try{
+	    	var head = str.substr(0,17);
+	    	var body = {};
+	    	var footer = str.substr(str.length - 2,2);
+	    	str = str.replace(head,"");
+	    	str = str.replace(footer,"");
+	    	eval("body = " + str);
+	    	return body.s;
+    	}catch(e){
+    		return [];
+    	}
+    }
+</script>
+
+<script type="text/javascript">
+	//语音识别处理,只支持google chrome 还需要翻墙
+	var micphone = '<i class="am-icon am-icon-microphone"></i>';
+	var listening = '<i class="am-icon-spinner am-icon-spin"></i>';
+	var $mic = $('.micphone');
+	$mic.click(function(event) {
+		// new instance of speech recognition
+		var recognition = new webkitSpeechRecognition();
+		// set params
+		recognition.continuous = true;
+		recognition.interimResults = true;
+		recognition.start();
+		$mic.html(listening);
+		
+		//45秒之后结束
+		setTimeout(function(){
+		},45000);
+
+		recognition.onresult = function(event){
+		  // delve into words detected results & get the latest
+		  // total results detected
+		  var resultsLength = event.results.length -1 ;
+		  // get length of latest results
+		  var ArrayLength = event.results[resultsLength].length -1;
+		  // get last word detected
+		  var saidWord = event.results[resultsLength][ArrayLength].transcript;
+		  $('.searchInput').val(saidWord);
+		}
+
+		recognition.onsoundend = function(){
+			$mic.html(micphone);
+		}
+
+		// speech error handling
+		recognition.onerror = function(event){
+		  alert("语音识别组件出错");
+		  console.log(event);
+		  $mic.html(micphone);
+		}
+
+	});
+
+</script>

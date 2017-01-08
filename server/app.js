@@ -8,7 +8,7 @@ var session = require('express-session');
 var webrouter = require('./webrouter'); 
 var partials = require('express-partials');
 var app = express();
-var config = require('./config');
+
 //调用游戏执行文件
 // view engine setup
 app.set('views', path.join(__dirname, '../client/views'));
@@ -44,6 +44,7 @@ app.use(session({
 app.use('/',webrouter);
 
 
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -74,6 +75,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var port = config.port;
+var port = 3040;
 console.log('app listen on '+port);
+app.listen(port);
 module.exports = app;

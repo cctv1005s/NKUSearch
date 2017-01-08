@@ -1,0 +1,197 @@
+<style type="text/css">
+	body{background: white;}
+</style>
+
+<!-- 搜索框 -->
+<div class="search">
+	<%- partial('searchBox.ejs',{value:keyword}); %>
+</div>
+
+
+<!--搜索分类-->
+<div class="search-classify">
+	<ul>
+		<li class="search-classify-item active">
+			<a href="/search?keyword=<%- keyword %>&page=<%- page %>" >网页</a>
+		</li>
+
+		<li class="search-classify-item">
+			<a href="/image/search?keyword=<%- keyword %>&page=<%- page %>">图片</a>
+		</li>
+
+	</ul>
+</div>
+
+
+<%
+	//用于处理标题的问题
+	function formatTitle(title){
+		title = title.replace('.json','');
+		title = title.replace('./data/','');
+		return title;
+	}
+%>
+<div class="search-num">
+	<%- data.all %>条结果
+</div>
+
+<!-- 搜索主体 -->
+<div class="search-page">
+	<ul class="search-list">
+		<% var result = data.data; %>
+		
+		<% result.map(function(el,i){ %>
+
+		<li class="search-item">
+			<div class="search-title">
+				
+				<a href="<%- el.url %>" target="_blank">
+					<%- el.highliter_Title=="null"?formatTitle(el.path):formatTitle(el.highliter_Title); %>
+				</a>
+				<i class="am-icon-volume-down"></i>
+			</div>
+
+			<div class="search-body">
+				<%- el.highliter %>
+			</div>
+
+			<div class="search-footer">
+				<span class="url"><a href="<%- el.url %>"><%- el.url %></a></span>
+				<span class="url">快照</span>
+				<span class="date">2015-12-6</span>
+			</div>
+		</li>
+
+		<% }) %>
+
+	</ul>
+</div>
+
+<!--预览盒子-->
+<div class="view-box">
+	  <iframe></iframe>
+	  <button class="am-btn am-btn-danger" id="close">关闭</button>
+	  <button class="am-btn am-btn-info" id="close-all">不再显示</button>
+</div>
+
+<!-- 分页 -->
+<%
+//计算分页目录
+//
+var all = data.all;
+
+var num = all/10 ;
+
+var begin = parseInt(page) - 5;
+if(begin<0){
+	begin = 0;
+}
+var end = parseInt(page) + 5;
+if(end > all){
+	end = all;
+}
+
+%>
+<div class="search-pageing">
+	<ul class="am-pagination am-pagination-left">
+	<%
+		if(page != 0){
+	%>
+		<li class="arrow">
+			<a href="/search?keyword=<%- keyword %>&page=<%- parseInt(page) - 1 %> " >
+				<i class="am-icon-arrow-left"></i>
+			</a>
+		</li>
+
+	<%
+		}
+	%>
+
+	<% for(var i = begin;i < end;i++){ %>
+		<li class="<%- i==page?"am-active":"" %>" >
+		    <a href="/search?keyword=<%- keyword %>&page=<%- i %> ">
+		      <%- i+1 %>
+		    </a>
+		</li>
+	<% } %>
+
+	<li class="arrow">
+		<a href="/search?keyword=<%- keyword %>&page=<%- parseInt(page) + 1 %> ">
+			<i class="am-icon-arrow-right"></i>
+		</a>
+	</li>
+
+	</ul>
+</div>
+
+
+
+<script type="text/javascript">
+
+	var canShow = true;
+
+	$('.search-title a').mouseover(function(e){
+		
+		var $ele = $(e.currentTarget);
+		var href = $ele.attr('href');
+		var left = $ele.offset().left;
+		var top = $ele.offset().top;
+		var height = $ele.height();
+		var width = $ele.width();
+		var pos = {
+			left:left + width + 20,
+			top:top
+		}
+	    if(canShow)
+	 	 showView(pos,href);		
+	});
+
+
+	function showView(pos,href){
+		$('.view-box').css({
+			left:pos.left + 20,
+			top:pos.top
+		})
+		var src = $('.view-box iframe').attr('src');
+		
+		if(src == href){
+			return;
+		}
+
+		$('.view-box iframe').attr({
+			src:href
+		});
+	};
+
+	$(".view-box #close").click(function(e){
+		$('.view-box').css({
+			left:"-100%"
+		});
+	});
+
+	$(".view-box #close-all").click(function(e){
+		$('.view-box').css({
+			left:"-100%"
+		});
+		canShow = false;
+	});
+
+</script>
+
+<script type="text/javascript">
+	//调用声音的按钮
+	$('.search-title i').click(function(e){
+		//获取标题文字
+		var $element = $(e.currentTarget);
+		var text = $element.parent().text();
+		text = text.replace(/\t|\n/,'');
+		//文本
+		text = encodeURI(text);
+		//获取语音的源
+		var $source = $("#search_audio source");
+		var src = "http://tsn.baidu.com/text2audio?tex="+text+"&lan=zh&cuid=D0-7E-35-36-85-F9&ctp=1&tok=24.c89d1d902e2cb9a78290f58eb68c7e69.2592000.1485834716.282335-8893160";
+		var audio = new Audio(); 
+		audio.src = src;
+		audio.play();
+	});
+</script>

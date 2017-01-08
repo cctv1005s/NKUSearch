@@ -1,5 +1,13 @@
-var request = require('request');
+const spawn = require('child_process').spawn;
 
-request('http://localhost:3040/',function(err,req,body){
-	console.log(req);
+var node = spawn('node',['getNKUWeb.js']);
+
+node.stdout.on('data', (data) => {
+  console.log(data.toString());
 });
+
+
+setTimeout(function(){
+	console.log("kill");
+	node.kill('SIGHUP');
+},3000);

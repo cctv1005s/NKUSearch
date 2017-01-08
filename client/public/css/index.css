@@ -8,89 +8,374 @@ html,body{height: 100%;width: 100%;}
 body{background: #eee;}
 *{font-family: "微软雅黑","weiruanyahei";}
 html, body {color: #333;font:DroidSansFallback,Arial,sans-serif;-webkit-text-size-adjust: none;-webkit-user-select: none;width: 100%;height: 100%;}
-.app ,#app{height: 100%;}
-
-.app{    
-    padding-top: 5rem;
-    background: black;
-    max-width: 700px;
-    margin: 0 auto;
-    background: url(../img/background.jpg) no-repeat;background-size:cover;
+.app ,#app{    height: 100%;
+    background: url(../img/background.jpg);
+    padding-top: 170px;
+    padding-left: 150px;
 }
 
-/* searchIndex 搜索首页的样式*/
 .searchBox{
-    width: 90%;
-    height: 1.2rem;
-    background: white;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
+	height: 50px;
+	width: 650px;
+	position: relative;
+
 }
 
-.searchTitle{
-     position: absolute;
-    font-size: 0.8rem;
-    color: white;
-    width: 100%;
-    top: -1.5rem;
-    text-align: center;   
+.searchTitle a{
+    color: white ;
 }
 
 .searchInput{
-    width: calc(100% - 1.2rem);
-    height: 100%;
-    border: none;
-    float: left;
-    font-size: 0.5rem;
-    text-indent: 0.2rem;
+    width: 600px;
+    height: 50px;
     outline: none;
+    float: left;
+    display: block;
+    padding-left: 10px;
 }
+
+.searchInput-box{
+    width: 600px;
+    float: left;
+    position: relative;
+}
+
+
+.suggest-box{
+    background: white;
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    
+    border-top: none;
+}
+
+.suggest-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #c8c8c8;
+}
+
+.suggest-item{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    display: block;
+    float: none;
+    padding-left: 20px;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.suggest-item a{
+    color: #a0a0a0;
+}
+
+.suggest-item:hover{
+    background: #eee;
+}
+
+.suggest-item:hover a{
+    border-bottom: 1px solid #a0a0a0;
+}
+
+
+/*搜索状态下的输入框*/
+
+.search .searchBox{
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.search .searchTitle a{
+    color: black;
+}
+
+.search .searchBtn{
+    height: 35px;
+    line-height: 35px;
+    width: 35px;
+    background-color: #0078d7;
+    font-size: 18px;
+    margin: 5px;
+}
+
+.search .searchInput{
+    height: 45px;
+}
+
+.searchTitle{
+    float: left;
+    height: 50px;
+    color: white;
+    font-size: 25px;
+    line-height: 50px;
+    width: 50px;
+    text-align: center;
+}
+
 
 .searchBtn{
-    float: right;
-    font-size: 0.6rem;
-    height: 1.2rem;
-    line-height: 1.2rem;
-    width: 1.2rem;
+    position: absolute;
+    height: 50px;
+    line-height: 50px;
     text-align: center;
-    background: yellow;
+    color: white;
+    right: 0;
+    width: 50px;
+    background-color: green;
+    font-size: 23px;
+    cursor: pointer;
 }
 
-/*搜索页的style*/
-.searchPage{background:#eee;min-height: 100%;}
-.searchPage > .header{padding-top: 0.5rem;background-color: white;}
-.header-searchbox{height: 1.2rem;background-color: white;}
-.header-icon{height: 1.2rem;width: 1.2rem;font-size: 0.5rem;line-height: 1.2rem;text-align: center;color: green;float: left;}
-.header-searchbox-input{float: left;width: calc(100% - 3rem);height: 1.2rem;outline: none;border: 1px solid #ccc;font-size: 0.5rem;}
-.header-searchbox-btn{float: left;height: 1.2rem;width: 1.2rem;text-align: center;font-size: 0.5rem;color: white;background-color: green;line-height: 1.2rem}
 
-.header-list{margin-top: 0.3rem;border-bottom: 1px solid #ccc;margin-bottom: 0.3rem;}
-.header-list > .active{border-bottom: 3px solid green;}
-.list-item{float: left;font-size: 0.4rem;margin:0 0.3rem;}
+/*搜索结果*/
+.search-list{
+    list-style: none;
+    width: 700px;
+    margin-left:50px;
+}
 
+.search-item{
+    margin-top: 30px;
+}
 
-.searchItem{background-color: white;padding: 0.3rem;margin-bottom: 0.3rem}
+/*标题*/
+.search-title{
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 22px;
+    padding-bottom: 10px;
+}
 
-.searchItem-title{
-    font-size: 0.6rem;
+.search-title a{
     color: #001ba0;
-    white-space: normal;
-    overflow: hidden;
-    width: 9rem;
-    text-overflow: ellipsis;
 }
 
-.searchItem-body{
-    font-size: 0.4rem;
-    height: 3rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.search-title a:hover{
+    border-bottom: 1px solid #001ba0;
 }
 
-.searchItem-footer{
-    font-size: 0.4rem;
-    margin-top: 0.3rem;
+/*声音播放*/
+.search-title i{
+    color: #c8c8c8;
 }
+
+.search-title i:hover{
+    color: #333;
+}
+
+
+.search-body{
+    font-size: 15px;
+    line-height: 17px;
+}
+
+.search-footer .date,.search-footer .url {
+    padding-right: 13px;
+    color: #67c064;
+    max-width: 20rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    font-size: 10px;
+}
+
+/*搜索出的总条目*/
+.search-num{
+    padding-left: 2rem;
+    margin-left: 60px;
+    margin-top: 20px;
+    line-height: 0;
+    color: #a0a0a0;
+    font-size: 15px;
+}
+
+
+
+.search-pageing{
+    margin-left: 60px;
+    padding-left: 2rem;
+}
+
+.search-pageing a{
+    border: none !important;
+    color: #8c8888 !important;
+}
+
+.search-pageing .am-active a{
+    background: none !important;
+    border: 2px solid #ddd !important;
+    margin: 0;
+    background: none;
+    cursor: pointer;
+    
+}
+
+.search-pageing .arrow a{
+    padding: 0;
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    border: 2px solid #8c8888 !important;
+    line-height: 35px;
+    text-align: center;
+    margin: 0;
+}
+
+.search-pageing .arrow a:hover{
+    color: blue !important;
+    border-color: blue !important;
+    background: none;
+}
+
+.micphone{
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    color: blue;
+    font-size: 27px;
+    line-height: 50px;
+    text-align: center;
+    right: 50px;
+    top: 0;
+    cursor: pointer;
+}
+
+
+
+/*预览窗口*/
+.view-box{
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 500px;
+    height: 300px;
+    background: white;
+    box-shadow: 5px 5px 10px #eee;
+    border: 1px solid #eee;
+}
+
+.view-box:before{
+    content: "";
+    border-width: 15px 15px;
+    border-color: rgba(0, 0, 0, 0) black transparent transparent;
+    left: -30px;
+    top: 0;
+    display: inline-block;
+    height: 0;
+    width: 0;
+    border-style: solid;
+    position: absolute;
+}
+
+.view-box:after{
+    content: "";
+    border-width: 15px 15px;
+    border-color: rgba(0, 0, 0, 0) white transparent transparent;
+    left: -30px;
+    top: 0;
+    display: inline-block;
+    height: 0;
+    width: 0;
+    border-style: solid;
+    position: absolute;   
+}
+
+.view-box iframe{
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+/*分类栏*/
+.search-classify{
+    margin-top: 20px;
+    margin-left: 45px;
+    padding-left: 2rem;
+    width: 700px;
+}
+
+.search-classify ul{
+    list-style: none;
+    padding-left: 0;
+    height: 40px;
+    line-height: 30px;
+    border-bottom: 1px solid #c8c8c8;
+}
+
+.search-classify .search-classify-item{
+    float: left;
+    width: 45px;
+    text-align: center;
+    padding-bottom: 6px;
+    margin-right: 30px;
+}
+
+.search-classify .search-classify-item a{
+    color: #c8c8c8;
+}
+
+.search-classify .active{
+    border-bottom: 4px #de3700 solid !important;
+    font-weight: bold !important;
+}
+
+.search-classify .active a{
+    color: black !important;
+}
+
+.search-img{
+    max-height: 150px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.img-search{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.img-search .search-classify{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.img-search .search-classify ul{
+    padding-left: 5rem;
+    cursor: pointer;
+}
+
+.search-img-wraper:hover{
+    transform: scale(1.3);
+    transition: 0.5s;
+    z-index: 999;
+}
+
+.search-img-wraper{
+    display: inline-block;
+    position: relative;
+}
+
+.search-img-url{
+    display: none;
+}
+
+.search-img-wraper:hover .search-img-url{
+    display: block;
+    position: absolute;
+    width: 100%;
+    z-index: 99;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    line-height: 20px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
 
 }
